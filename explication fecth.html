@@ -20,14 +20,30 @@
       </select>
     </form>
 
-    <form>
+    <form onsubmit="return onAjoutMarque()">
       <div class="field">
         <label for="nomMarque"></label>
         <input id="nomMarque" type="text" />
       </div>
-      <inupt type="submit" />
+      <button type="submit">Ajouter la marque</button>
     </form>
   </body>
 
-  <script></script>
+  <script>
+    function onAjoutMarque() {
+      const nomNouvelleMarque = document.querySelector("#nomMarque").value;
+
+      const nouvelleMarque = { nom: nomNouvelleMarque };
+      const jsonNouvelleMarque = JSON.stringify(nouvelleMarque);
+
+      fetch("http://localhost/explication-fetch/ajout-marque.php", {
+        method: "POST",
+        body: jsonNouvelleMarque,
+      })
+        .then((reponse) => reponse.json())
+        .then((listeMarque) => console.log(listeMarque));
+
+      return false; //pour que la page ne se recharge pas
+    }
+  </script>
 </html>
